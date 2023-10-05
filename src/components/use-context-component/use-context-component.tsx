@@ -11,7 +11,6 @@ export function UseContextComponent() {
 
   return (
     <ThemeContext.Provider value={theme}>
-      <h1>UseContextComponent</h1>
       <div
         className={classNames("p-6 my-4 rounded-md", {
           "bg-slate-800 text-white": theme === "dark",
