@@ -1,8 +1,21 @@
 import Image from "next/image";
+import { ThemeContext } from "../use-context-component/use-context-component";
+import { useContext } from "react";
+import classNames from "classnames";
 
 export function ProductItem() {
+  const theme = useContext(ThemeContext);
+
   return (
-    <div className='shadow-md rounded-md overflow-hidden relative cursor-pointer hover:shadow-xl transition-all'>
+    <div
+      className={classNames(
+        "shadow-md rounded-md overflow-hidden relative cursor-pointer hover:shadow-xl transition-all",
+        {
+          "text-white bg-slate-800": theme === "dark",
+          "text-base bg-white": theme === "light",
+        }
+      )}
+    >
       <ProductImage />
       <ProductContent />
     </div>
