@@ -3,7 +3,7 @@ import { ThemeContext } from "../use-context-component/use-context-component";
 import { useContext } from "react";
 import classNames from "classnames";
 
-export function ProductItem() {
+export function ProductItem(props: ProductItemProps) {
   const theme = useContext(ThemeContext);
 
   return (
@@ -17,7 +17,7 @@ export function ProductItem() {
       )}
     >
       <ProductImage />
-      <ProductContent />
+      <ProductContent {...props} />
     </div>
   );
 }
@@ -37,16 +37,30 @@ function ProductImage() {
   );
 }
 
-function ProductContent() {
+export interface ProductItemProps {
+  name: string;
+  variations: string;
+  price: number;
+}
+
+function ProductContent(props: ProductItemProps) {
   return (
     <div className='relative p-4'>
-      <h3>Product Name</h3>
-      <small className='text-gray-500'>White/Black</small>
-      <ProductPrice />
+      <ProductName name={props.name} />
+      <ProductVariations variations={props.variations} />
+      <ProductPrice price={props.price} />
     </div>
   );
 }
 
-function ProductPrice() {
-  return <div className='absolute top-4 right-4'>$199</div>;
+function ProductName({ name }: { name: string }) {
+  return <h3>{name}</h3>;
+}
+
+function ProductVariations({ variations }: { variations: string }) {
+  return <small className='text-gray-500'>{variations}</small>;
+}
+
+function ProductPrice({ price }: { price: number }) {
+  return <div className='absolute top-4 right-4'>${price}</div>;
 }

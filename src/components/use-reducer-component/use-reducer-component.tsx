@@ -8,7 +8,7 @@ type CartItem = {
   price: number;
 };
 
-function cartReducer(
+export function cartReducer(
   state: CartItem[],
   action: { type: "add" | "remove"; payload: CartItem }
 ) {
@@ -23,7 +23,18 @@ function cartReducer(
 }
 
 export function UseReducerComponent() {
-  const [cart, dispatch] = useReducer(cartReducer, []);
+  const [cart, dispatch] = useReducer(cartReducer, [
+    {
+      id: 1,
+      name: "Item 1",
+      price: 9.99,
+    },
+    {
+      id: 2,
+      name: "Item 2",
+      price: 9.99,
+    },
+  ]);
 
   const addItem = () => {
     const id = Math.random();

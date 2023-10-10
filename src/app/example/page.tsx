@@ -1,6 +1,8 @@
 "use client";
 
-import ProductItem from "@/components/product-item/product-item";
+import ProductItem, {
+  ProductItemProps,
+} from "@/components/product-item/product-item";
 
 import UseCallbackComponent from "@/components/use-callback-component/use-callback-component";
 import UseStateComponent from "@/components/use-state-component/use-state-component";
@@ -10,16 +12,43 @@ import UseMemoComponent, {
   UseMemoNoCacheComponent,
 } from "@/components/use-memo-component/use-memo-component";
 import UseReducerComponent from "@/components/use-reducer-component/use-reducer-component";
+import { useState } from "react";
 
 export default function Example() {
+  const [products, setProducts] = useState<ProductItemProps[]>([
+    {
+      name: "Product 1",
+      price: 100,
+      variations: "White/Black",
+    },
+    {
+      name: "Product 2",
+      price: 80,
+      variations: "Black",
+    },
+    {
+      name: "Product 3",
+      price: 90,
+      variations: "White",
+    },
+  ]);
+
   return (
     <main className='container mx-auto my-10'>
       <div className='grid grid-cols-1 gap-10'>
         <div>
           <h1 className='text-2xl font-medium mb-6'>Example Components</h1>
           <div className='grid grid-cols-4 gap-6'>
-            {Array.from({ length: 8 }).map((_, i) => (
+            {/* {Array.from({ length: 8 }).map((_, i) => (
               <ProductItem key={i} />
+            ))} */}
+            {products.map((product, index) => (
+              <ProductItem
+                key={index}
+                name={product.name}
+                price={product.price}
+                variations={product.variations}
+              />
             ))}
           </div>
         </div>
