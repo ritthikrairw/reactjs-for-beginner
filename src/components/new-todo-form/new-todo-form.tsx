@@ -1,10 +1,10 @@
+import { SaveTodoRequest } from "@/services/todos";
 import { useState } from "react";
 import Checkbox from "../checkbox/checkbox";
 import InputText from "../input-text/input-text";
-import { TodoItem } from "../todo-list-item/todo-list-item";
 
 export interface NewTodoFormProps {
-  onSubmit: (todo: TodoItem) => void;
+  onSubmit: (todo: SaveTodoRequest) => void;
 }
 
 export function NewTodoForm({ onSubmit }: NewTodoFormProps) {
@@ -12,7 +12,7 @@ export function NewTodoForm({ onSubmit }: NewTodoFormProps) {
   const [description, setDescription] = useState<string>("");
   const [completed, setCompleted] = useState<boolean>(false);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (title === "") {
@@ -20,9 +20,7 @@ export function NewTodoForm({ onSubmit }: NewTodoFormProps) {
       return;
     }
 
-    onSubmit({
-      id: Math.floor(Math.random() * 1000) + 1,
-      date: new Date(),
+    await onSubmit({
       title: title,
       description: description,
       favorite: false,
@@ -43,11 +41,7 @@ export function NewTodoForm({ onSubmit }: NewTodoFormProps) {
       className="mb-4 flex gap-1 rounded-md bg-white p-4"
       onSubmit={handleSubmit}
     >
-      <Checkbox
-        onChange={handleOnChange}
-        checked={completed}
-        defaultChecked={completed}
-      />
+      <Checkbox onChange={handleOnChange} checked={completed} />
       <InputText
         placeholder="Create a new todo."
         value={title}

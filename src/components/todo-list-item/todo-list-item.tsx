@@ -5,11 +5,12 @@ import Checkbox from "../checkbox/checkbox";
 
 export type TodoItem = {
   id: number;
-  date: Date;
   title: string;
   description?: string;
   favorite: boolean;
   completed: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 interface TodoListItemProps extends TodoItem {
@@ -19,31 +20,37 @@ interface TodoListItemProps extends TodoItem {
 
 export function TodoListItem({
   id,
-  date,
   title,
   description,
   favorite,
   completed,
+  createdAt,
+  updatedAt,
   onComplete,
   onRemove,
 }: TodoListItemProps) {
   const [todo, setTodo] = useState<TodoItem>({
     id: id,
-    date: date,
     title: title,
     description: description,
     favorite: favorite,
     completed: completed,
+    createdAt: createdAt,
+    updatedAt: updatedAt,
   });
+
+  const handleOnComplete = async (event: any) => {
+    if (!onComplete) return;
+    await onComplete({
+      ...todo,
+      completed: event.target.checked,
+    });
+  };
 
   return (
     <div className="py-4 first:pt-0 last:pb-0">
       <div className="relative flex gap-4">
-        <Checkbox
-          id={id.toString()}
-          defaultChecked={completed}
-          onChange={() => onComplete && onComplete(todo)}
-        />
+        <Checkbox checked={completed} onChange={handleOnComplete} />
         <div>
           <h3
             className={classNames("text-lg font-semibold", {
@@ -61,7 +68,9 @@ export function TodoListItem({
               {description}
             </p>
           )}
-          <small className="text-xs text-gray-400">{formatDate(date)}</small>
+          <small className="text-xs text-gray-400">
+            {createdAt && formatDate(createdAt)}
+          </small>
         </div>
         <button
           className="absolute right-0 top-0 text-sm text-red-600 underline"
