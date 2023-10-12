@@ -7,20 +7,16 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    container: {
-      center: true,
-      padding: "1rem",
-      screens: {
-        "2xl": "1200px",
-      },
-    },
     extend: {
-      colors: {
-        primary: "#b42e34",
-        secondary: "#f2f2f2",
+      container: {
+        center: true,
+        padding: "1rem",
+        screens: {
+          "2xl": "1000px",
+        },
       },
     },
   },
-  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms")],
+  plugins: [],
 };
 export default config;
